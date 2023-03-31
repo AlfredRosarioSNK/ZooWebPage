@@ -1,3 +1,4 @@
+/* css del slider */
 .d-block{
     position: relative;
     width: 100%;
@@ -10,6 +11,7 @@
     width: 100%;
     color: rgb(255, 255, 255);
     }
+    /* css de la barra de navegacion */
 .botones{
     display: flex;
     list-style: none;
@@ -42,7 +44,7 @@ figure {
     opacity: 0;
     transition: opacity 0.3s;
   }
-  
+  /* css de los botones de la galeria */
   figure:hover figcaption {
     opacity: 1;
   }
@@ -56,6 +58,7 @@ figure {
   .slider-word {
     margin: 0 10px;
     cursor: pointer;
+    transition: opacity 0.5s ease-in-out, max-height 0.5s ease-in-out;
   }
   
   .slider-word.active {
@@ -63,17 +66,52 @@ figure {
   }
   
   .gallery {
-    display: none;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.5s ease-in-out, max-height 0.5s ease-in-out;
   }
   
   .gallery.active {
-    display: block;
+    opacity: 1;
+    max-height: 100vh; /* Ajusta esto según la altura máxima esperada de tus galerías */
   }
   
-
+  
+/* lineas del menu abajo del slider */
 #lineItem {
     border-right: 1px solid white;
+    border-left: 1px solid white  ;
     height: 40px;
     border-radius: 0%;
     background-color: #669900;
 }
+/* inicio del css de las tarjetas para los tipos de animales, los pone en filas y columnas */
+#middleNavBar{
+  display: flex;
+  justify-content: center;
+  background-color: #669900;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  grid-gap: 1rem;
+  padding: 1rem;
+}
+
+.card {
+  width: 100%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.card-img-top {
+  width: 100%;
+  height: auto;
+}
+
+.card-body {
+  padding: 1rem;
+}
+

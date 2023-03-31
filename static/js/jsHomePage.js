@@ -1,13 +1,23 @@
 const sliderWords = document.querySelectorAll(".slider-word");
 const galleries = document.querySelectorAll(".gallery");
 
+// Show the initially active gallery
+galleries.forEach((gallery) => {
+  if (gallery.classList.contains("active")) {
+    gallery.style.maxHeight = "100vh";
+  }
+});
+
 sliderWords.forEach((word) => {
   word.addEventListener("click", () => {
     const galleryToShow = word.getAttribute("data-gallery");
     galleries.forEach((gallery) => {
-      gallery.classList.remove("active");
       if (gallery.id === galleryToShow) {
         gallery.classList.add("active");
+        gallery.style.maxHeight = "100vh";
+      } else {
+        gallery.classList.remove("active");
+        gallery.style.maxHeight = "0";
       }
     });
     sliderWords.forEach((w) => {
@@ -16,7 +26,7 @@ sliderWords.forEach((word) => {
     word.classList.add("active");
   });
 });
-const figures = document.querySelectorAll("figure");
+
 
 figures.forEach((figure) => {
   const img = figure.querySelector("img");
