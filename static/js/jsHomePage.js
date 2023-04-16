@@ -1,7 +1,6 @@
 const sliderWords = document.querySelectorAll(".slider-word");
 const galleries = document.querySelectorAll(".gallery");
 
-// Show the initially active gallery
 galleries.forEach((gallery) => {
   if (gallery.classList.contains("active")) {
     gallery.style.maxHeight = "100vh";
@@ -27,10 +26,30 @@ sliderWords.forEach((word) => {
   });
 });
 
+const searchForm = document.getElementById("search-form");
+const searchInput = document.getElementById("search-input");
 
-figures.forEach((figure) => {
-  const img = figure.querySelector("img");
-  const caption = figure.querySelector("figcaption");
-  const alt = img.getAttribute("alt");
-  caption.textContent = alt;
+searchForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const name = searchInput.value;
+  const api_url = `https://api.api-ninjas.com/v1/animals?name=${name}`;
+
+  fetch(api_url, {
+    headers: {
+      "X-Api-Key": "rQFVUenlLXpQGf0+o0kgtw==ciAdRxWMJyLN0WPx"
+    }
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.text();
+      } else {
+        throw new Error(`Error: ${response.status} ${response.statusText}`);
+      }
+    })
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 });
