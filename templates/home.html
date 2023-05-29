@@ -5,6 +5,17 @@
 {% endblock %}
 
 {% block body %}
+
+<div id="splash-screen" style="display: none;">
+  <div class="paws">
+    <img src="{{url_for('static', filename='/images/paws.webp')}}" alt="">
+    <img src="{{url_for('static', filename='/images/paws.webp')}}" alt="">
+    <img src="{{url_for('static', filename='/images/paws.webp')}}" alt="">
+    <img src="{{url_for('static', filename='/images/paws.webp')}}" alt="">
+  </div>
+</div>
+
+
 <div id="message" class="alert" style="display: none;"></div>
 
 <input type="hidden" id="signupUrl" value="{{ url_for('signup') }}">
@@ -14,7 +25,8 @@
   <nav class="navbar navbar-expand-lg ">
     <div class="container">
       <header>
-        <img class="logo" src="{{url_for('static', filename='/images/Logo/Logo.png')}}">
+        <a href="{{ url_for('home') }}"><img class="logo"
+            src="{{url_for('static', filename='/images/Logo/Logo.png')}}"></a>
       </header>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
         aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,27 +34,19 @@
       </button>
       <ul class="navBar--Buttons">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#linkToAboutSection">about</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#linkToAboutSection">Contact us</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link" style="margin-left: 50%;" onclick="toggleLoginForm()">
             {% if session['username'] %}
             {{ session['username'] }}
             {% else %}
-            Log In/Sign up
+            <span class="login-signUp--textStyle">Log In/Sign up</span>
             {% endif %}
           </a>
           <img class="nav-link login-icon" src="{{url_for('static', filename='/images/icons/login-icon.png')}}">
+
           {% if session['username'] %}
           <a href="{{ url_for('logout') }}"><img class="nav-link login-icon"
               src="{{url_for('static', filename='/images/icons/SignOut-Icon.png')}}"></a>
-          {% endif %}
+          {% else %}
           <div class="login-form" id="loginFormContainer" style="display:none;">
             <form id="loginForm" action="{{ url_for('login') }}" method="post" data-signup-url="{{ url_for('signup') }}"
               data-login-url="{{ url_for('login') }}">
@@ -52,11 +56,14 @@
               </div>
               <input type="email" name="email" placeholder="Email" required>
               <input type="password" name="password" placeholder="Password" required>
-              <div id="confirmPasswordContainer"></div>
-              <button type="submit">Log In</button>
+              <div id="confirmPasswordContainer" style="display:none;">
+                <input type="password" id="confirmPasswordInput" name="confirmPassword" placeholder="Confirm Password">
+              </div>
+              <button id="submitButton" type="submit">Log In</button>
               <button type="button" id="toggleButton" onclick="toggleSignupForm()">Sign Up</button>
             </form>
           </div>
+          {% endif %}
         </li>
 
       </ul>
@@ -71,13 +78,12 @@
 </nav>
 </div>
 
-<!-- src="{{url_for('static', filename='/images/homeGiraffe.jpg')}}" -->
 <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
       <div class="d-block">
         <img src="{{url_for('static', filename='/images/homeGalapagos.jpg')}}" class="w-100" alt="...">
-        <div class="carousel-caption">
+        <div class="carousel-caption" style="margin-top: 3%;">
           <h5>Come and have some fun with Seamus the seal!</h5>
           <p>Come witness the wonder of Seamus and his seal pals at our new seal attraction!</p>
         </div>
@@ -87,53 +93,102 @@
       <div class="d-block">
         <img src="{{url_for('static', filename='/images/homeLeon.jpg')}}" class="w-100" alt="...">
         <div class="carousel-caption">
-          <h5>lorem ipsum</h5>
-          <p>lorem ipsum</p>
+          <h5>Roar Along with Our Majestic Lions!</h5>
+          <p>Experience the thrill of the jungle as you watch our proud lion pride during our exciting lion event!</p>
         </div>
       </div>
     </div>
     <div class="carousel-item">
       <div class="d-block">
         <img src="{{url_for('static', filename='/images/homeTiger.jpg')}}" class="w-100" alt="...">
-        <div class="carousel-caption">
-          <h5>lorem ipsum</h5>
-          <p>lorem ipsum</p>
+        <div class="carousel-caption" style="margin-top: 2%;">
+          <h5>Unleash Your Wild Side with Our Tigers!</h5>
+          <p>Join us for an exhilarating day in the tiger enclosure and witness the majestic stripes of our tigers up
+            close!</p>
         </div>
       </div>
     </div>
   </div>
 
+
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="carousel-control-prev-icon" aria-hidden="true"><img
+        src="{{url_for('static', filename='/images/icons/back-Icon.png')}}"></span>
     <span class="visually-hidden">Previous</span>
   </button>
   <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="carousel-control-next-icon" aria-hidden="true"><img
+        src="{{url_for('static', filename='/images/icons/next-Icon.png')}}"></span>
     <span class="visually-hidden">Next</span>
   </button>
 </div>
 
+
+
 <div class="middleNavBar-block">
   <a href="#linkToSearchBar"><span class="middleNavBar-item" style="text-decoration: none;">Animals</span></a>
   <span class="middleNavBar-separator"></span>
-  <a href="#"><span class="middleNavBar-item">Activities</span></a>
+  <a href="#linkToNews"><span class="middleNavBar-item">News</span></a>
   <span class="middleNavBar-separator"></span>
-  <a href="#linkToMapSection"><span class="middleNavBar-item">Map</span></a>
+  <a href="#linkToZoo"><span class="middleNavBar-item">Zoo</span></a>
+  <span class="middleNavBar-separator"></span>
+  <a href="#linkToBuyTicket"><span class="middleNavBar-item">Buy Ticket</span></a>
+  <span class="middleNavBar-separator"></span>
+  <a href="#linkToFundraise"><span class="middleNavBar-item">Fundraise</span></a>
+  <span class="middleNavBar-separator"></span>
+  <div class="dropdown">
+    <button class="dropbtn">About us</button>
+    <div class="dropdown-content">
+      <a href="#testimonials">Reviews</a>
+      <a href="#linkToContactUs">Contact</a>
+      <a href="#linkToAboutSection">About</a>
+      <a href="#linkToJoinUs">Join us</a>
+    </div>
+  </div>
+  <img class="logo-map--style" src="{{url_for('static', filename='/images/icons/map-icon.png')}}">
 </div>
 
 
-<div class="news-calendar-container">
-  <div class="news-block">
-    <p class="news-block--date">{{ current_date }}</p>
-    <p class="news-block--title">Doors open</p>
-    <p class="news-block--description">First day on the zoo!</p>
-  </div>
 
-  <div class="calendar-container">
-    <h2>Calendar</h2>
+<div id="mapModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <img class="modal-map" src="{{url_for('static', filename='images/zooMap.jpg')}}" alt="Map" style="width:100%">
+  </div>
+</div>
+
+
+<div class="news-calendar-container" style="margin-left: 35%;">
+  <img src="{{url_for('static', filename='images/lion-event.png')}}" style="margin-right: 30%;">
+  <div class="calendar-container floating-container">
     {{ calendar_html | safe }}
   </div>
+
+  <div class="news-block">
+    <p class="news-block--date">{{ current_date }}</p>
+    <p class="news-block--title">Schedule</p>
+    <ul>
+      <li>
+        <p class="news-block--description">Meet the Keeper Sessions</p>
+      </li>
+      <li>
+        <p class="news-block--description">Guided Animal Encounters</p>
+      </li>
+      <li>
+        <p class="news-block--description">Behind-the-Scenes Tours</p>
+      </li>
+      <li>
+        <p class="news-block--description">Night Safari Experience</p>
+      </li>
+      <li>
+        <p class="news-block--description">Animal Feeding Demonstrations</p>
+      </li>
+    </ul>
+  </div>
+
 </div>
+
+
 
 
 <div id="linkToSearchBar" class="search-section">
@@ -179,81 +234,161 @@
 <div class="blog-section">
   <div class="section-content blog">
 
-    <div class="title">
+    <div id="linkToNews" class="title">
       <h2>blog & news</h2>
-      <p>lorem ipsum.</p>
+      <p>Lets see what happens out there.</p>
     </div>
     <div class="cards">
       <div class="card">
         <div class="image-section">
-          <img src="{{url_for('static', filename='/images/homeTiger.jpg')}}">
+          <img src="{{url_for('static', filename='/images/news/newsOne.jpg')}}">
         </div>
         <div class="article">
-          <h4> title one</h4>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore
-            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-            commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur.</p>
+          <h4>Criminal Cases for Killing Eagles Decline as Wind Turbine Dangers Grow</h4>
+          <p>ROLLING HILLS, Wyo. (AP) — Criminal cases brought by U.S. wildlife officials for killing or harming
+            protected bald and golden eagles dropped sharply
+            in recent years, even as officials ramped up issuing permits that will allow wind energy companies to kill
+            thousands of eagles without legal consequence.</p>
         </div>
         <div class="blog-view">
-          <a href="" class="button">read more</a>
+          <a target="_blank"
+            href="https://www.usnews.com/news/best-states/wyoming/articles/2023-05-17/criminal-cases-for-killing-eagles-decline-as-wind-turbine-dangers-grow"
+            class="button">read more</a>
         </div>
         <div class="posted-date">
-          <p>posted on jan 15 2021</p>
+          <p>posted on May 17, 2023</p>
         </div>
       </div>
       <div class="card">
         <div class="image-section">
-          <img src="{{url_for('static', filename='/images/homeTiger.jpg')}}">
+          <img src="{{url_for('static', filename='/images/news/newsTwo.jpg')}}">
         </div>
         <div class="article">
-          <h4> title one</h4>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore
-            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-            commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur.</p>
+          <h4>Surfing Gator Seen Relaxing at Alabama Beach Amid the Waves</h4>
+          <p>There are plenty of alligators in Alabama. But how many enjoy a day at the beach?
+
+            One such unlikely critter was spotted riding the waves recently on Dauphin Island, bobbing calmly near the
+            human beachgoers sunbathing and wading.
+
+            Matt Harvill, a 27-year-old Mobile resident, came across the lengthy gator on May 7 while at the beach
+            taking pregnancy announcement photos with his girlfriend.</p>
         </div>
         <div class="blog-view">
-          <a href="" class="button">read more</a>
+          <a target="_blank"
+            href="https://apnews.com/article/alabama-alligator-beach-swimming-video-468c5aa61224bf51da5823c19e391f0d"
+            class="button">read more</a>
         </div>
         <div class="posted-date">
-          <p>posted on jan 15 2021</p>
+          <p>posted on May 16, 2023</p>
         </div>
       </div>
       <div class="card">
         <div class="image-section">
-          <img src="{{url_for('static', filename='/images/homeTiger.jpg')}}">
+          <img src="{{url_for('static', filename='/images/news/newsThree.jpg')}}">
         </div>
         <div class="article">
-          <h4> title one</h4>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore
-            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-            commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur.</p>
+          <h4>Herders in Kenya Kill 10 Lions, Including Loonkiito, One of the Country's Oldest</h4>
+          <p>NAIROBI, Kenya (AP) — One of Kenya’s oldest wild lions was killed by herders and the government has
+            expressed concern as six more lions were speared at another village on Saturday, bringing to 10 the number
+            killed last week alone.
+
+            The male lion named Loonkiito was 19 years old and was described as frail by Kenya Wildlife Service
+            spokesperson Paul Jinaro, who said it wandered out of the Amboseli national park into a village in search of
+            food on Thursday night.</p>
         </div>
         <div class="blog-view">
-          <a href="" class="button">read more</a>
+          <a target="_blank"
+            href="https://www.usnews.com/news/world/articles/2023-05-14/herders-in-kenya-kill-10-lions-including-loonkiito-one-of-the-countrys-oldest"
+            class="button">read more</a>
         </div>
         <div class="posted-date">
-          <p>posted on jan 15 2021</p>
+          <p>posted on May 14, 2023</p>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<section id="linkToMapSection" class="map-section">
-  <h1 class="display-1 map-title--Style"> Zoo map</h1>
-  <div class="map-container">
-    <img src="{{url_for('static', filename='/images/zooMap.jpg')}}" alt="Mapa del zoológico" class="map-image">
+<iframe id="linkToZoo" class="video-section" width="560" height="315" src="https://www.youtube.com/embed/sX1XwDFdpdc"
+  title="YouTube video player" frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen></iframe>
+<div class="video-description">
+  <h2>Experience the Wonders of Nature</h2>
+  <p>Our zoo is a sanctuary for the most diverse species on the planet. Come face-to-face with exotic wildlife from all
+    around the world. It's an experience that is both thrilling and educational - perfect for families and wildlife
+    lovers. Join us on this adventure and create unforgettable memories!</p>
+</div>
+
+
+
+<div id="linkToBuyTicket" class="image-container">
+  <img src="{{url_for('static', filename='/images/zooTicketsPic.png')}}">
+  <div class="image-text">
+    <p>Uncover the wonders of the animal kingdom! A thrilling adventure awaits you and your loved ones at our zoo. With
+      exhibits from every corner of the globe, our zoo is the perfect place to connect with nature and learn about the
+      magnificent creatures we share this world with. Don't miss out on this unforgettable experience</p>
+
+    <form class="paypal-form" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+      <input type="hidden" name="cmd" value="_s-xclick">
+      <input type="hidden" name="hosted_button_id" value="L8XZ56VNJAG2G">
+      <table>
+        <tr>
+          <td><input type="hidden" name="on0" value="ticket">ticket</td>
+        </tr>
+        <tr>
+          <td><select name="os0">
+              <option value="Buy a zoo ticket">Buy a zoo ticket $0.10 USD</option>
+            </select></td>
+        </tr>
+      </table>
+      <input type="hidden" name="currency_code" value="USD">
+      <input style="margin-right: 30%;" type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_SM.gif"
+        border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+      <img alt="" border="0" src="https://www.paypalobjects.com/es_XC/i/scr/pixel.gif" width="1" height="1">
+    </form>
   </div>
-</section>
+</div>
+
+<div id="linkToFundraise" class="grid-container" style="margin-left: 12%;">
+  <div class="blockquote-wrapper">
+    <div class="blockquote">
+      <h1>
+        <span style="color: #DDA15E;">greatness of a nation and its</span> <span style="color: #606C38;"> moral progress
+          can be judged </span> <span style="color: #DDA15E;">by the way its animals are <span
+            style="color: #606C38;">treated</span></span>
+      </h1>
+      <h4>&mdash;Mahatma Gandhi</h4>
+    </div>
+  </div>
+
+  <div class="box" style="margin-right: 50%; margin-top: 10%;">
+    <a target="_blank" href="https://www.chesterzoo.org/what-you-can-do/fundraising/">
+      <img src="{{url_for('static', filename='/images/fundRaising.webp')}}" alt="Imagen 1">
+      <div class="corner">
+        <p>Fundraise</p>
+      </div>
+    </a>
+  </div>
+
+  <div class="box">
+    <a target="_blank" href="{{ url_for('home') }}">
+      <img src="{{url_for('static', filename='/images/donations.jpg')}}" alt="Imagen 2">
+      <div class="corner">
+        <p>Donations</p>
+      </div>
+    </a>
+  </div>
+
+  <div class="box" style="margin-right: 50%;">
+    <a target="_blank" href="https://www.staf.org/">
+      <img src="{{url_for('static', filename='/images/saveThem.jpg')}}" alt="Imagen 3">
+      <div class="corner">
+        <p>Save Them</p>
+      </div>
+    </a>
+  </div>
+</div>
 
 <section id="testimonials">
   <div class="testimonial-heading">
@@ -265,11 +400,11 @@
       <div class="box-top">
         <div class="pofile">
           <div class="profile-img">
-            <img src="{{url_for('static', filename='/images/profilePics/Will-Smith.jpg')}}" />
+            <img src="{{url_for('static', filename='/images/profilePics/Emily Thompson.jpg')}}" />
           </div>
           <div class="name-user">
-            <strong>alfred rosario</strong>
-            <span>@asies</span>
+            <strong>Emily Thompson</strong>
+            <span>@WildlifeFan87</span>
           </div>
         </div>
         <div class="reviews">
@@ -277,15 +412,17 @@
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
-          <i class="far fa-star"></i>
+          <i class="fas fa-star"></i>
         </div>
       </div>
       <div class="client-comment">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-          est laborum.</p>
+        <p>I had a fantastic day at the zoo. The variety of animals is truly astounding, from the mighty lions and
+          tigers to the graceful flamingos.
+          Each exhibit was well-maintained and informative, providing not only a thrilling experience but also a great
+          opportunity for learning.
+          The staff was attentive and friendly, ready to answer any questions. I highly recommend this zoo to anyone
+          seeking a fun, educational outing.
+          I can't wait for my next visit. Will definitely be back soon."</p>
       </div>
     </div>
 
@@ -293,27 +430,28 @@
       <div class="box-top">
         <div class="pofile">
           <div class="profile-img">
-            <img src="{{url_for('static', filename='/images/profilePics/Will-Smith.jpg')}}" />
+            <img src="{{url_for('static', filename='/images/profilePics/Michael Roberts.jpg')}}" />
           </div>
           <div class="name-user">
-            <strong>alfred rosario</strong>
-            <span>@asies</span>
+            <strong>Michael Roberts</strong>
+            <span>@NatureLover2023</span>
           </div>
         </div>
         <div class="reviews">
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
+          <i class="far fa-star"></i>
           <i class="far fa-star"></i>
         </div>
       </div>
       <div class="client-comment">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-          est laborum.</p>
+        <p>The zoo is a really nice place to spend the day with family.
+          The kids absolutely loved the tiger exhibit! It was a joy watching them marvel at the majestic animals.
+          I appreciated the safety measures in place, ensuring a worry-free experience for us parents.
+          The facilities were clean and well-kept. If I had one suggestion, it would be to organize more interactive
+          activities for children.
+          Overall, a good experience.</p>
       </div>
     </div>
 
@@ -321,27 +459,28 @@
       <div class="box-top">
         <div class="pofile">
           <div class="profile-img">
-            <img src="{{url_for('static', filename='/images/profilePics/Will-Smith.jpg')}}" />
+            <img src="{{url_for('static', filename='/images/profilePics/Olivia Jenkins.webp')}}" />
           </div>
           <div class="name-user">
-            <strong>alfred rosario</strong>
-            <span>@asies</span>
+            <strong>Olivia Jenkins</strong>
+            <span>@AnimalAdmirer</span>
           </div>
         </div>
         <div class="reviews">
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
+          <i class="far fa-star"></i>
+          <i class="far fa-star"></i>
           <i class="far fa-star"></i>
         </div>
       </div>
       <div class="client-comment">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-          est laborum.</p>
+        <p>I enjoyed my visit to the zoo but I wish there were more food options.
+          The animal exhibits were great, especially the birds of prey section.
+          I learned a lot and the animals seemed well-cared for. However, the food court lacked variety.
+          The food was okay but a few more choices would be appreciated. The gift shop, on the other hand, had a lot of
+          fun souvenirs.
+          Overall, a nice day out.</p>
       </div>
     </div>
 
@@ -349,37 +488,38 @@
       <div class="box-top">
         <div class="pofile">
           <div class="profile-img">
-            <img src="{{url_for('static', filename='/images/profilePics/Will-Smith.jpg')}}" />
+            <img src="{{url_for('static', filename='/images/profilePics/Daniel Harrison.jpg')}}" />
           </div>
           <div class="name-user">
-            <strong>alfred rosario</strong>
-            <span>@asies</span>
+            <strong>Daniel Harrison</strong>
+            <span>@SpeciesSupporter</span>
           </div>
         </div>
         <div class="reviews">
           <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
+          <i class="far fa-star"></i>
+          <i class="far fa-star"></i>
+          <i class="far fa-star"></i>
           <i class="far fa-star"></i>
         </div>
       </div>
       <div class="client-comment">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-          est laborum.</p>
+        <p>The zoo experience was decent but could definitely improve in certain areas.
+          The animal exhibits were a delight to see but the signage around the zoo was a bit confusing at times.
+          I had trouble navigating to certain areas. Also, the bathroom facilities could use an upgrade. On the plus
+          side,
+          the zoo staff was very helpful whenever I had questions.
+          With some improvements, this could be a top-notch zoo.</p>
       </div>
     </div>
-    <div class="content-container">
+    <div id="linkToContactUs" class="content-container">
       <div class="contact-form--style">
         <div class="container contact-form">
           <h1 class="text-center mb-4">
             Contact Us
             <span class="tooltip">
               <i class="far fa-star"></i>
-              <span class="tooltip-message">Aquí puedes contactarnos para cualquier consulta o sugerencia.</span>
+              <span class="tooltip-message"></span>
             </span>
           </h1>
 
@@ -409,13 +549,47 @@
       <img id="myBtn" onclick="topFunction()" title="Go to top"
         src="{{url_for('static', filename='/images/icons/goUp-icon.png')}}">
 
+      <div id="linkToJoinUs" class="social-icons">
+        <h1 class="display-6 map-title--Style" style="margin-left: 0.5%;">Join us!</h1>
+        <a target="_blank" href="https://www.facebook.com/profile.php?id=100013672749664" class="fa fa-facebook"></a>
+        <a target="_blank" href="https://www.instagram.com/alfredrosario07/" class="fa fa-instagram"></a>
+        <a target="_blank" href="https://discord.com/" class="fa fa-discord"></a>
+        <a target="_blank" href="twitter.com" class="fa fa-twitter"></a>
+      </div>
+
       <div id="linkToAboutSection" class="about-section about-us-container flex-grow">
         <h2>About Us</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum.
-          Cras porttitor metus justo, ut efficitur velit ullamcorper auctor. Praesent commodo velit et ligula semper,
-          vitae ullamcorper odio auctor.</p>
-        <a href="#">Learn More</a>
+        <p>Founded in 2023, Alfred's Zoo has been dedicated to inspiring a lifelong appreciation of wildlife and
+          conservation through our captivating exhibits, educational programs, and ongoing research initiatives. We
+          strive to create a fun, engaging, and safe environment where our visitors can come face to face with a variety
+          of fascinating animal species from all around the globe.</p>
+        <p>Our mission is to connect people with nature and instill in them a deep respect and care for the natural
+          world. We're committed to animal welfare and conservation, and we actively participate in global efforts to
+          protect endangered species.</p>
+        <p>Join us for an unforgettable adventure as we explore the wonders of the animal kingdom together!</p>
       </div>
-    </div>
 
-    {% endblock %}
+      <script>
+
+        var modal = document.getElementById("mapModal");
+
+        var img = document.querySelector('.logo-map--style');
+        img.onclick = function () {
+          modal.style.display = "block";
+        }
+
+        var span = document.getElementsByClassName("close")[0];
+
+        span.onclick = function () {
+          modal.style.display = "none";
+        }
+
+        window.onclick = function (event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+
+      </script>
+
+      {% endblock %}

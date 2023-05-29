@@ -89,6 +89,10 @@ def home():
 
     return render_template('home.html', calendar_html=calendar_html, current_date=current_date)
 
+@app.route("/buy_ticket")
+def buy_ticket():
+
+    return render_template('buy_ticket.html')
 
 @app.route("/api/mammals")
 def get_mammals():
@@ -170,12 +174,15 @@ def login():
     password = request.form['password']
     user = db.users.find_one({'email': email})
 
-    if user and user['password'] == password:
-        session['username'] = user['userName']
-        return jsonify({'status': 'success', 'message': 'Successfully logged in.', 'redirect': url_for('home')})
+    if user and 'password' in user and user['password'] == password:
+        username = user.get('userName', None)
+        if username is not None:
+            session['username'] = username
+            return jsonify({'status': 'success', 'message': 'Successfully logged in.', 'redirect': url_for('home')})
+        else:
+            return jsonify({'status': 'fail', 'message': 'Username does not exist.'})
     else:
         return jsonify({'status': 'fail', 'message': 'Invalid email or password.'})
-
 
 @app.route('/logout')
 def logout():
