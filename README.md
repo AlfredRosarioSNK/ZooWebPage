@@ -16,4 +16,4 @@ In my case i am using anaconda as you see. Since you already installed everythin
 
 This should initialize the project without any problem.
 
-if you want to use my info (like the animal names, interesting facts and images) there is the ip acces to my data base on mongodb atlas: ***10.0.0.0/8*** can use this one too ***179.53.1.159/32***
+if you want to use my info (like the animal names, interesting facts and images) there is the ip acces to my data base on mongodb atlas: ***10.0.0.0/8*** can use this one too ***179.53.30.244/32***
