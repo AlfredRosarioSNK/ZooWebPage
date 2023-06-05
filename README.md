@@ -1,5 +1,11 @@
 # Welcome to my project, here is a little tutorial to teach you how to start.
 
+#Requisites
+<ul>
+<li>Anaconda</li>
+<li>Git</li>  
+<li>Flask</li>  
+</ul>
 First. On git, once you are in the path where you want to clone the repository type the following in the git console 
 
 ***git init https://github.com/AlfredRosarioSNK/ZooWebPage***
