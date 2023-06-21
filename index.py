@@ -11,11 +11,8 @@ from bson import json_util
 import json
 import os
 from dotenv import load_dotenv
-
 app = Flask(__name__)
-
 load_dotenv()
-
 mail_username = os.getenv('MAIL_USERNAME')
 mail_password = os.getenv('MAIL_PASSWORD')
 mongo_client_string = os.getenv('MONGO_CLIENT')
@@ -39,26 +36,24 @@ collectionMammal = db['Mammals']
 
 @app.route('/search')
 def search():
-    search_term = request.args.get('search', '')
-    if search_term:
-        search_filter = {"name": {"$regex": search_term, "$options": "i"}}
-        count = collection.count_documents(search_filter)
-        results = collection.find(search_filter)
+    searchTerm = request.args.get('search', '')
+    if searchTerm:
+        searchFilter = {"name": {"$regex": searchTerm, "$options": "i"}}
+        count = collection.count_documents(searchFilter)
+        results = collection.find(searchFilter)
     else:
-        sample_size = 5
-        results = collection.aggregate([{"$sample": {"size": sample_size}}])
-        count = sample_size
-
-    animal_data = []
+        sampleSize = 5
+        results = collection.aggregate([{"$sample": {"size": sampleSize}}])
+        count = sampleSize
+    animalData = []
     for result in results:
         name = result.get("name", "No name available")
         image = result.get("image", result.get("Image", "No image available"))
-        interesting_fact = result.get(
+        interestingFact = result.get(
             "interesting-fact", "No interesting fact available")
-        animal_data.append({"name": name, "image": image,
-                           "interesting_fact": interesting_fact})
-
-    return render_template('search_results.html', search_term=search_term, results=animal_data, count=count)
+        animalData.append({"name": name, "image": image,
+                           "interestingFact": interestingFact})
+    return render_template('searchResults.html', searchTerm=searchTerm, results=animalData, count=count)
 
 
 class CustomHTMLCalendar(calendar.HTMLCalendar):
@@ -80,57 +75,79 @@ class CustomHTMLCalendar(calendar.HTMLCalendar):
 @app.route("/")
 @app.route("/home")
 def home():
-    current_year = datetime.now().year
-    current_month = datetime.now().month
-    current_day = datetime.now().day
-    cal = CustomHTMLCalendar(current_year, current_month, current_day)
-    calendar_html = cal.formatmonth(current_year, current_month)
-    current_date = datetime.now().strftime("%B, %d %Y")
+    currentYear = datetime.now().year
+    currentMonth = datetime.now().month
+    currentDay = datetime.now().day
+    cal = CustomHTMLCalendar(currentYear, currentMonth, currentDay)
+    calendarHtml = cal.formatmonth(currentYear, currentMonth)
+    currentDate = datetime.now().strftime("%B, %d %Y")
+    return render_template('home.html', calendarHtml=calendarHtml, currentDate=currentDate)
 
-    return render_template('home.html', calendar_html=calendar_html, current_date=current_date)
+def header():
+    return render_template('headerBlock.html')
 
-@app.route("/buy_ticket")
-def buy_ticket():
+def carouselNavBar():
+    return render_template('carouselNavbarBlock.html')
 
-    return render_template('buy_ticket.html')
+def newsCalendarBlock():
+    return render_template('scheduleCalendarBlock.html')
+
+def newsBlock():
+    return render_template('newsBlock.html')
+
+def videoBlock():
+    return render_template('videoBlock.html')
+
+def buyBlock():
+    return render_template('buyBlock.html')
+
+def fundraiseBlock():
+    return render_template('fundraiseBlock.html')
+
+def testimonialsAndfeedBackBlock():
+    return render_template('testimonialsAndfeedBackBlock.html')
+
+def socialMediaBlock():
+    return render_template('socialMediaBlock.html')
+
+def aboutUsBlock():
+    return render_template('aboutUsBlock.html')
 
 @app.route("/api/mammals")
 def get_mammals():
     mammals = collectionMammal.find({})
-    mammals_json = json.loads(json_util.dumps(mammals))
-    return jsonify(mammals_json)
+    mammalsJson = json.loads(json_util.dumps(mammals))
+    return jsonify(mammalsJson)
 
 
 @app.route("/api/reptile")
 def get_reptile():
     reptile = collectionReptile.find({})
-    reptile_json = json.loads(json_util.dumps(reptile))
-    return jsonify(reptile_json)
+    reptileJson = json.loads(json_util.dumps(reptile))
+    return jsonify(reptileJson)
 
 
 @app.route("/api/amphibian")
 def get_amphibian():
     amphibian = collectionAmphibian.find({})
-    amphibian_json = json.loads(json_util.dumps(amphibian))
-    return jsonify(amphibian_json)
+    amphibianJson = json.loads(json_util.dumps(amphibian))
+    return jsonify(amphibianJson)
 
 
 @app.route("/api/bird")
 def get_bird():
     bird = collectionBird.find({})
-    bird_json = json.loads(json_util.dumps(bird))
-    return jsonify(bird_json)
+    birdJson = json.loads(json_util.dumps(bird))
+    return jsonify(birdJson)
 
 
-@app.route('/send_email', methods=['POST'])
-def send_email():
+@app.route('/sendEmail', methods=['POST'])
+def sendEmail():
     name = request.form['firstname']
     email = request.form['lastname']
     country = request.form['country']
     subject = request.form['subject']
-
     message_body = f"Name: {name}\nEmail: {email}\nCountry: {country}\nSubject: {subject}"
-
     message = Message(subject="Feedback from my page", body=message_body,
                       sender='alfredsnk@gmail.com', recipients=['alfredsnk@gmail.com'])
     mail.send(message)
@@ -157,12 +174,12 @@ def signup():
     email = request.form['email']
     password = request.form['password']
     userName = request.form['userName']
-    existing_user = db.users.find_one({'email': email})
+    existingUser = db.users.find_one({'email': email})
 
-    if existing_user is None:
+    if existingUser is None:
         session['username'] = userName
-        new_user = User(userName, email, password)
-        db.users.insert_one(new_user.to_json())
+        newUser = User(userName, email, password)
+        db.users.insert_one(newUser.to_json())
         return jsonify({'status': 'success', 'message': 'Successfully registered user.'})
     else:
         return jsonify({'status': 'fail', 'message': 'User already exists.'})
@@ -184,23 +201,24 @@ def login():
     else:
         return jsonify({'status': 'fail', 'message': 'Invalid email or password.'})
 
+
 @app.route('/logout')
 def logout():
     session.pop('username', None)
     return redirect(url_for('home'))
 
 
-google_credentials_path = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
+googleCredentialsPath = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
 creds = service_account.Credentials.from_service_account_file(
-    google_credentials_path)
+    googleCredentialsPath)
 
 client = storage.Client(project='My First Project', credentials=creds)
 bucket = client.bucket('zoo-imagestest')
 
-storage_client = storage.Client()
+storageClient = storage.Client()
 
 bucket_name = 'zoo-imagestest'
-bucket = storage_client.bucket(bucket_name)
+bucket = storageClient.bucket(bucket_name)
 
 if __name__ == '__main__':
 

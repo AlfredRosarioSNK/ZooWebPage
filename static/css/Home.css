@@ -9,7 +9,7 @@ header {
   font-weight: bold;
 }
 
-.logo {
+.logo--Size {
   max-height: 150px;
   margin-right: 150px;
 }
@@ -70,8 +70,6 @@ header {
   font-size: 1.5rem;
 }
 
-
-
 .d-block {
   position: relative;
   width: 100%;
@@ -90,7 +88,7 @@ header {
   font-style: normal;
 }
 
-.menu {
+.menu-Block--DimensionPosition {
   position: absolute;
   z-index: 2;
   width: 100%;
@@ -128,7 +126,7 @@ header {
   white-space: nowrap;
 }
 
-.nav-item {
+.nav-item--style {
   display: flex;
   width: 65px;
   text-decoration: none;
@@ -223,7 +221,6 @@ header {
   display: block;
 }
 
-
 .card {
   width: 100%;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -293,20 +290,17 @@ header {
   width: 60%;
 }
 
-
 .news-calendar-container img {
   width: 50%;
   margin-right: 5%;
   transform: translateX(-400px);
 }
 
-
 .news-block {
   width: 40%;
   margin-top: 10%;
   transform: translateX(-500px);
 }
-
 
 .search-form {
   position: relative;
@@ -384,7 +378,6 @@ header {
 
 .search-section {
   margin-top: 4%;
-
   background-color: #FEFAE0;
   padding: 30px 0;
 }
@@ -408,7 +401,6 @@ header {
   padding: 2rem;
 }
 
-
 .about-section h2 {
   font-size: 2rem;
   margin-bottom: 1rem;
@@ -430,8 +422,6 @@ header {
   text-decoration: underline;
   color: #cceeff;
 }
-
-
 
 .main-container {
   min-height: 100%;
@@ -516,14 +506,12 @@ header {
   border-radius: 4px;
 }
 
-
 * {
   margin: 0px;
   padding: 0px;
   font-family: poppins;
   box-sizing: border-box;
 }
-
 
 a {
   text-decoration: none;
@@ -757,7 +745,7 @@ html {
   background-color: #555;
 }
 
-.icon-container {
+.animalIcons--container {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -771,7 +759,7 @@ html {
   overflow: hidden;
 }
 
-.icon {
+.animal-icon--dimensions {
   width: 100px;
   height: 100px;
 }
@@ -781,10 +769,8 @@ html {
 }
 
 .icon-wrapper.selected {
-  background-color: #99AC5D;
+  filter: hue-rotate(100deg);
 }
-
-
 
 .gallery {
   display: flex;
@@ -887,7 +873,6 @@ html {
   font-size: 16px;
   margin: 10px 0px;
   color: #6a6a6a;
-
 }
 
 .blog-section .section-content .cards .card a {
@@ -972,7 +957,6 @@ html {
   color: white;
 }
 
-
 .image-container {
   margin-top: 3%;
   position: relative;
@@ -986,7 +970,7 @@ html {
   filter: brightness(60%);
 }
 
-.image-text {
+.buyBlock--imageText {
   position: absolute;
   top: 50%;
   right: 50%;
@@ -999,23 +983,23 @@ html {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.image-text .ticket-links {
+.buyBlock--imageText .ticket-links {
   color: white;
   text-decoration: underline;
   margin: 10px;
   font-size: 20px;
 }
 
-.image-text .ticket-links:hover {
+.buyBlock--imageText .ticket-links:hover {
   color: #96A75D;
   text-decoration: none;
 }
 
-.image-text a {
+.buyBlock--imageText a {
   color: white;
 }
 
-.image-text .ticket-links.disabled {
+.buyBlock--imageText .ticket-links.disabled {
   color: grey;
   pointer-events: none;
   cursor: default;
@@ -1141,20 +1125,20 @@ html {
   margin-left: -12px;
 }
 
-.box {
+.fundraise-boxes--containerDimensions {
   position: relative;
   width: 600px;
   height: 300px;
   overflow: hidden;
 }
 
-.box img {
+.fundraise-boxes--containerDimensions img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.box::before {
+.fundraise-boxes--containerDimensions::before {
   content: "";
   position: absolute;
   top: 0;
@@ -1166,7 +1150,7 @@ html {
   transform-origin: top left;
 }
 
-.box p {
+.fundraise-boxes--containerDimensions p {
   position: absolute;
   top: 0;
   left: 0;
@@ -1179,7 +1163,7 @@ html {
   text-align: center;
 }
 
-.grid-container {
+.grid-container--fundraiseBlockLinks {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 0.1fr 0.1fr;
@@ -1223,7 +1207,6 @@ html {
     transform: translateY(-15px) scale(1.2) rotate(15deg);
   }
 }
-
 
 .modal {
   display: none;

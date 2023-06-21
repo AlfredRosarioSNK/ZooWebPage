@@ -1,14 +1,13 @@
 {% extends "home.html" %}
-
 {% block content %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/search_results.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/searchResults.css') }}">
 {% if results %}
 <div class="results-container">
   {% for result in results %}
   <div class="result-card">
     <h3>{{ result.name }}</h3>
     <img src="{{ result.image }}" alt="{{ result.name }}">
-    <p>{{ result.interesting_fact }}</p>
+    <p>{{ result.interestingFact }}</p>
   </div>
   {% endfor %}
 </div>
