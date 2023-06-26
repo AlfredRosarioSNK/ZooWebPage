@@ -1,17 +1,17 @@
-{% extends "home.html" %}
-{% block content %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/searchResults.css') }}">
+{% block results %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 {% if results %}
-<div class="results-container">
+<div class="gallery show">
   {% for result in results %}
-  <div class="result-card">
-    <h3>{{ result.name }}</h3>
-    <img src="{{ result.image }}" alt="{{ result.name }}">
-    <p>{{ result.interestingFact }}</p>
+  <div class="card" style="width: 18rem;">
+    <img src="{{ result.image }}" class="card-img-top" alt="Image of {{ result.name }}">
+    <div class="card-body">
+      <h5 class="card-title">{{ result.name }}</h5>
+      <p class="card-text">{{ result.interestingFact }}</p>
+    </div>
   </div>
   {% endfor %}
 </div>
 {% else %}
-<p>No results found.</p>
 {% endif %}
 {% endblock %}

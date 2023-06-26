@@ -66,4 +66,12 @@ function openGallery(id) {
         word.classList.add("active");
       });
     });
+    document.getElementById("toggle-calendar").addEventListener("click", function() {
+      const calendar = document.querySelector(".calendar-container");
   
+      if (calendar.classList.contains("hidden")) {
+          calendar.classList.remove("hidden");
+      } else {
+          calendar.classList.add("hidden");
+      }
+  });

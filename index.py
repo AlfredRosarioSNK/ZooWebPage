@@ -33,29 +33,6 @@ collectionBird = db['Birds']
 collectionAmphibian = db['Amphibians']
 collectionMammal = db['Mammals']
 
-
-@app.route('/search')
-def search():
-    searchTerm = request.args.get('search', '')
-    if searchTerm:
-        searchFilter = {"name": {"$regex": searchTerm, "$options": "i"}}
-        count = collection.count_documents(searchFilter)
-        results = collection.find(searchFilter)
-    else:
-        sampleSize = 5
-        results = collection.aggregate([{"$sample": {"size": sampleSize}}])
-        count = sampleSize
-    animalData = []
-    for result in results:
-        name = result.get("name", "No name available")
-        image = result.get("image", result.get("Image", "No image available"))
-        interestingFact = result.get(
-            "interesting-fact", "No interesting fact available")
-        animalData.append({"name": name, "image": image,
-                           "interestingFact": interestingFact})
-    return render_template('searchResults.html', searchTerm=searchTerm, results=animalData, count=count)
-
-
 class CustomHTMLCalendar(calendar.HTMLCalendar):
     def __init__(self, year, month, day):
         super().__init__()
@@ -73,15 +50,31 @@ class CustomHTMLCalendar(calendar.HTMLCalendar):
 
 
 @app.route("/")
-@app.route("/home")
+@app.route("/", methods=['GET', 'POST'])
 def home():
+    searchTerm = request.args.get('search', '')
+    animalData = None
+    
+    if searchTerm:
+        searchFilter = {"name": {"$regex": searchTerm, "$options": "i"}}
+        results = collection.find(searchFilter)
+        animalData = []
+        for result in results:
+            name = result.get("name", "No name available")
+            image = result.get("image", result.get("Image", "No image available"))
+            interestingFact = result.get("interesting-fact", "No interesting fact available")
+            animalData.append({"name": name, "image": image, "interestingFact": interestingFact})
+
+    # The calendar logic here
     currentYear = datetime.now().year
     currentMonth = datetime.now().month
     currentDay = datetime.now().day
     cal = CustomHTMLCalendar(currentYear, currentMonth, currentDay)
     calendarHtml = cal.formatmonth(currentYear, currentMonth)
     currentDate = datetime.now().strftime("%B, %d %Y")
-    return render_template('home.html', calendarHtml=calendarHtml, currentDate=currentDate)
+
+    return render_template('home.html', calendarHtml=calendarHtml, currentDate=currentDate, searchTerm=searchTerm, results=animalData)
+
 
 def header():
     return render_template('headerBlock.html')

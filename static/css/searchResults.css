@@ -1,4 +1,3 @@
-/* Estilo para el contenedor principal de los resultados de búsqueda */
 .results-container {
     display: flex;
     flex-wrap: wrap;
@@ -7,7 +6,6 @@
     gap: 20px;
   }
   
-  /* Estilo para cada tarjeta de resultado de búsqueda */
   .result-card {
     display: flex;
     flex-direction: column;

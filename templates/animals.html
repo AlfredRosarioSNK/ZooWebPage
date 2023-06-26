@@ -1,14 +1,15 @@
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
-{% block body %}
+{% block animals %}
 <div id="linkToSearchBar" class="search-section">
     <div class="search-container">
-      <form class="search-form" action="{{ url_for('search') }}" method="GET">
+      <form class="search-form" action="{{ url_for('home') }}" method="GET">
         <input type="text" class="search-input" name="search" id="search" placeholder="Search for an animal">
         <button class="search-btn" type="submit">Search</button>
       </form>
     </div>
   </div>
+  {% include 'searchResults.html' %}
 <h1 class="display-1 map-title--Style">Just want to see our animals?</h1>
 <div class="animalIcons--container">
   <div class="icon-wrapper">

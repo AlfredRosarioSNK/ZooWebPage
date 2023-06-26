@@ -19,10 +19,19 @@ header {
   height: auto;
 }
 
-.logo-map--style:hover {
-  background-color: #ffffff;
-  transition: ease 0.5s;
+.logo-schedule--style{
+  width: 2%;
+  height: auto;
+  margin-left: 1%;
 }
+.logo-schedule--style:hover{
+  transform: scale(1.1);
+}
+
+.logo-map--style:hover {
+  transform: scale(1.1);
+}
+
 
 .caption-text {
   text-align: center;
@@ -182,8 +191,8 @@ header {
 
 .middleNavBar-item:hover,
 .dropbtn:hover {
-  background-color: white;
-  color: #606C38;
+  transform: scale(1.1);
+  color: #DDA15E;
 }
 
 .middleNavBar-separator {
@@ -288,6 +297,24 @@ header {
   justify-content: flex-start;
   align-items: flex-start;
   width: 60%;
+}
+
+.calendar-container {
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  margin-top: 2rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+  visibility: visible;
+}
+
+.hidden {
+  opacity: 0;
+  visibility: hidden;
 }
 
 .news-calendar-container img {
@@ -429,15 +456,6 @@ header {
   flex-direction: column;
 }
 
-.calendar-container {
-  background-color: rgba(255, 255, 255, 0.8);
-  text-align: center;
-  margin-top: 2rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  overflow: hidden;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
 
 .calendar-container table {
   margin: 0 auto;
@@ -766,10 +784,11 @@ html {
 
 .icon-wrapper:hover {
   transform: scale(1.1);
+  filter: grayscale(100%); /* Aplica un efecto de escala de grises cuando el cursor está sobre el ícono */
 }
 
 .icon-wrapper.selected {
-  filter: hue-rotate(100deg);
+  filter: blur(2px);
 }
 
 .gallery {
@@ -962,6 +981,7 @@ html {
   position: relative;
   width: 50%;
   margin-left: 25%;
+  margin: 0 auto;
 }
 
 .image-container img {
@@ -1013,6 +1033,8 @@ html {
   width: 1200px;
   height: 700px;
   margin-left: 27%;
+  margin: 0 auto;
+  margin-top: 5%;
 }
 
 .video-description {
@@ -1165,9 +1187,12 @@ html {
 
 .grid-container--fundraiseBlockLinks {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 0.1fr 0.1fr;
+  grid-template-columns: 5fr 5fr;
+  grid-template-rows: 0.3fr 0.3fr;
   justify-items: center;
+  grid-row-gap: 5%;
+  grid-column-gap: 20%;
+  margin-right: 10%;
 }
 
 #splash-screen {
@@ -1276,4 +1301,8 @@ html {
   right: 20px;
   z-index: 9999;
   margin-bottom: 5%;
+}
+
+.lion-event--image{
+  border-radius: 50%;
 }
