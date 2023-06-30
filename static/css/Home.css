@@ -19,12 +19,13 @@ header {
   height: auto;
 }
 
-.logo-schedule--style{
+.logo-schedule--style {
   width: 2%;
   height: auto;
   margin-left: 1%;
 }
-.logo-schedule--style:hover{
+
+.logo-schedule--style:hover {
   transform: scale(1.1);
 }
 
@@ -784,11 +785,12 @@ html {
 
 .icon-wrapper:hover {
   transform: scale(1.1);
-  filter: grayscale(100%); /* Aplica un efecto de escala de grises cuando el cursor está sobre el ícono */
 }
 
 .icon-wrapper.selected {
-  filter: blur(2px);
+  font-weight: bold;
+  color: #ac611e;
+  transform: scale(1.5);
 }
 
 .gallery {
@@ -1303,6 +1305,6 @@ html {
   margin-bottom: 5%;
 }
 
-.lion-event--image{
+.lion-event--image {
   border-radius: 50%;
 }
