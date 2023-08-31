@@ -9,99 +9,65 @@ function toggleSignupForm() {
   let userNameContainer = document.getElementById('userNameContainer');
   let confirmPasswordContainer = document.getElementById('confirmPasswordContainer');
   if (form && userNameContainer && confirmPasswordContainer) {
+    let passwordInput = form.querySelector('input[name="password"]');
+    let confirmPasswordInput = form.querySelector('input[name="confirmPassword"]');
+    let userNameInput = userNameContainer.querySelector('input[name="username"]');
+    let emailInput = form.querySelector('input[name="email"]');
     if (form.action.endsWith("/login")) {
       form.action = form.dataset.signupUrl;
       form.querySelector('button[type="submit"]').textContent = "Sign Up";
       document.getElementById('toggleButton').textContent = "Log In";
       userNameContainer.style.display = 'block';
-      form.noValidate = false;
       if (!confirmPasswordContainer.firstChild) {
-        let confirmPasswordInput = document.createElement('input');
+        confirmPasswordInput = document.createElement('input');
         confirmPasswordInput.type = 'password';
         confirmPasswordInput.name = 'confirmPassword';
         confirmPasswordInput.placeholder = 'Confirm Password';
-        confirmPasswordInput.required = true;
         confirmPasswordContainer.appendChild(confirmPasswordInput);
       }
       confirmPasswordContainer.style.display = 'block';
-      confirmPasswordContainer.firstChild.required = true;
     } else {
       form.noValidate = true;
       if (confirmPasswordContainer.firstChild) {
-        let confirmPasswordInput = confirmPasswordContainer.firstChild;
-        confirmPasswordInput.required = false;
+        confirmPasswordInput = confirmPasswordContainer.firstChild;
         confirmPasswordContainer.removeChild(confirmPasswordInput);
       }
       form.action = form.dataset.loginUrl;
       form.querySelector('button[type="submit"]').textContent = "Log In";
       document.getElementById('toggleButton').textContent = "Sign Up";
       userNameContainer.style.display = 'none';
-      confirmPasswordContainer.style.display = 'none';
     }
+    if (passwordInput) passwordInput.value = "";
+    if (userNameInput) userNameInput.value = "";
+    if (confirmPasswordInput) confirmPasswordInput.value = "";
+    if (emailInput) emailInput.value = ""; 
   }
-}
-let ticketLink = document.querySelector('.ticket-links');
-if (ticketLink) {
-  ticketLink.addEventListener('click', function (e) {
-    if (this.classList.contains('disabled')) {
-      toggleLoginForm();
-      e.preventDefault();
-    }
-  });
 }
 let loginForm = document.getElementById('loginForm');
 if (loginForm !== null) {
   loginForm.addEventListener('submit', function (event) {
-    event.preventDefault();
-    let confirmPasswordContainer = document.getElementById('confirmPasswordContainer');
-    let confirmPasswordInput = confirmPasswordContainer ? confirmPasswordContainer.firstChild : null;
-    if (confirmPasswordContainer && confirmPasswordInput) {
-      if (confirmPasswordContainer.style.display === 'none' && confirmPasswordInput.required) {
-        confirmPasswordInput.required = false;
-      }
+    event.preventDefault();  
+    let userNameContainer = document.getElementById('userNameContainer');
+    let userNameInput = userNameContainer.querySelector('input[name="username"]');
+    let passwordInput = this.querySelector('input[name="password"]');
+    let confirmPasswordInput = this.querySelector('input[name="confirmPassword"]');
+    if (this.action.endsWith("/signup") && (userNameInput.value === "" || passwordInput.value === "" || confirmPasswordInput.value === "")) {
+      alert("Por favor, rellena todos los campos.");
+      return;
     }
-    let form = this;
-    setTimeout(function () {
-      if (form.action.endsWith("/signup") && confirmPasswordContainer.style.display !== 'none') {
-        let password = form.querySelector('input[name="password"]').value;
-        let confirmPassword = form.querySelector('input[name="confirmPassword"]').value;
-        if (password !== confirmPassword) {
-          let messageContainer = document.getElementById('message');
-          messageContainer.textContent = "Passwords do not match.";
-          messageContainer.style.display = 'block';
-          messageContainer.style.color = 'red';
-          setTimeout(function () {
-            messageContainer.style.display = 'none';
-          }, 5000);
-          return;
-        }
+    let formData = new FormData(this);
+    fetch(this.action, {
+      method: this.method,
+      body: formData
+    }).then(response => response.json()).then(data => {
+      if (data.status === 'success') {
+        alert(data.message);  
+        window.location.href = data.redirect;  
+      } else {
+        alert('Error: ' + data.message);  
       }
-      fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form),
-      })
-        .then(response => response.json())
-        .then(data => {
-          let messageContainer = document.getElementById('message');
-          messageContainer.textContent = data.message;
-          messageContainer.style.display = 'block';
-          if (data.status === 'success') {
-            messageContainer.style.color = 'green';
-            if (data.redirect) {
-              window.location.href = data.redirect;
-            } else {
-              location.reload();
-            }
-          } else {
-            messageContainer.style.color = 'red';
-          }
-          setTimeout(function () {
-            messageContainer.style.display = 'none';
-          }, 5000);
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-    }, 0);
+    }).catch(error => {
+      console.error('Error:', error);
+    });
   });
 }

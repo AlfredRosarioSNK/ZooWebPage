@@ -4,7 +4,8 @@
   <div class="carousel-inner">
     <div class="carousel-item active">
       <div class="d-block">
-        <img src="{{url_for('static', filename='/images/homeGalapagos.jpg')}}" class="w-100" alt="...">
+        <img src="{{url_for('static', filename='/images/homeGalapagos.jpg')}}" class="carousel-img--dimensions"
+          alt="...">
         <div class="carousel-caption" style="margin-top: 3%;">
           <h5>Come and have some fun with Seamus the seal!</h5>
           <p>Come witness the wonder of Seamus and his seal pals at our new seal attraction!</p>
@@ -13,7 +14,7 @@
     </div>
     <div class="carousel-item">
       <div class="d-block">
-        <img src="{{url_for('static', filename='/images/homeLeon.jpg')}}" class="w-100" alt="...">
+        <img src="{{url_for('static', filename='/images/homeLeon.jpg')}}" class="carousel-img--dimensions" alt="...">
         <div class="carousel-caption">
           <h5>Roar Along with Our Majestic Lions!</h5>
           <p>Experience the thrill of the jungle as you watch our proud lion pride during our exciting lion event!</p>
@@ -22,7 +23,7 @@
     </div>
     <div class="carousel-item">
       <div class="d-block">
-        <img src="{{url_for('static', filename='/images/homeTiger.jpg')}}" class="w-100" alt="...">
+        <img src="{{url_for('static', filename='/images/homeTiger.jpg')}}" class="carousel-img--dimensions" alt="...">
         <div class="carousel-caption" style="margin-top: 2%;">
           <h5>Unleash Your Wild Side with Our Tigers!</h5>
           <p>Join us for an exhilarating day in the tiger enclosure and witness the majestic stripes of our tigers up
@@ -46,13 +47,13 @@
   <a href="#linkToSearchBar"><span class="middleNavBar-item" style="text-decoration: none;">Animals</span></a>
   <span class="middleNavBar-separator"></span>
   <a href="#linkToNews"><span class="middleNavBar-item">News</span></a>
-  <span class="middleNavBar-separator"></span>
-  <a href="#linkToZoo"><span class="middleNavBar-item">Zoo</span></a>
+  <span id="displayNone-NavBarItems" class="middleNavBar-separator"></span>
+  <a id="displayNone-NavBarItems" href="#linkToZoo"><span class="middleNavBar-item">Zoo</span></a>
   <span class="middleNavBar-separator"></span>
   <a href="#linkToBuyTicket"><span class="middleNavBar-item">Buy Ticket</span></a>
-  <span class="middleNavBar-separator"></span>
-  <a href="#linkToFundraise"><span class="middleNavBar-item">Fundraise</span></a>
-  <span class="middleNavBar-separator"></span>
+  <span id="displayNone-NavBarItems" class="middleNavBar-separator"></span>
+  <a id="displayNone-NavBarItems" href="#linkToFundraise"><span class="middleNavBar-item">Fundraise</span></a>
+  <span id="displayNone-NavBarItems" class="middleNavBar-separator"></span>
   <div class="dropdown">
     <button class="dropbtn">About us</button>
     <div class="dropdown-content">

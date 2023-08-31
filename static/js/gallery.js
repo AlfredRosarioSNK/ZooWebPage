@@ -7,22 +7,33 @@ function openGallery(id) {
     'amphibians': '/api/amphibian'
   };
   const iconWrappers = document.querySelectorAll('.icon-wrapper');
+
   for (const wrapper of iconWrappers) {
-    if (wrapper.querySelector('img').getAttribute('onclick').includes(id)) {
-      wrapper.classList.add('selected');
+    if (wrapper.querySelector('img').getAttribute('onclick').includes(id)) {  
+      if (gallery.classList.contains('show')) {
+        wrapper.classList.remove('selected');
+      } else {
+        wrapper.classList.add('selected');
+      }
     } else {
       wrapper.classList.remove('selected');
     }
   }
+
   if (galleryPath[id]) {
     fetch(galleryPath[id])
       .then(response => response.json())
       .then(data => {
-        gallery.innerHTML = data.map(createCard).join('');
-        gallery.style.display = 'flex';
-        setTimeout(function () {
-          gallery.classList.add('show');
-        }, 20);
+        if (gallery.classList.contains('show')) {
+          gallery.innerHTML = '';
+          gallery.classList.remove('show');
+        } else {
+          gallery.innerHTML = data.map(createCard).join('');
+          gallery.style.display = 'flex';
+          setTimeout(function () {
+            gallery.classList.add('show');
+          }, 20);
+        }
       });
   }
 }
@@ -52,9 +63,12 @@ sliderWords.forEach((word) => {
   word.addEventListener("click", () => {
     const galleryToShow = word.getAttribute("data-gallery");
     galleries.forEach((gallery) => {
-      if (gallery.id === galleryToShow) {
+      if (gallery.id === galleryToShow && !gallery.classList.contains("active")) {
         gallery.classList.add("active");
         gallery.style.maxHeight = "100vh";
+      } else if (gallery.id === galleryToShow && gallery.classList.contains("active")) {
+        gallery.classList.remove("active");
+        gallery.style.maxHeight = "0";
       } else {
         gallery.classList.remove("active");
         gallery.style.maxHeight = "0";

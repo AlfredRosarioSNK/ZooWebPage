@@ -11,6 +11,7 @@ from bson import json_util
 import json
 import os
 from dotenv import load_dotenv
+
 app = Flask(__name__)
 load_dotenv()
 mail_username = os.getenv('MAIL_USERNAME')
@@ -50,11 +51,11 @@ class CustomHTMLCalendar(calendar.HTMLCalendar):
 
 
 @app.route("/")
+
 @app.route("/", methods=['GET', 'POST'])
 def home():
     searchTerm = request.args.get('search', '')
     animalData = None
-    
     if searchTerm:
         searchFilter = {"name": {"$regex": searchTerm, "$options": "i"}}
         results = collection.find(searchFilter)
@@ -64,15 +65,12 @@ def home():
             image = result.get("image", result.get("Image", "No image available"))
             interestingFact = result.get("interesting-fact", "No interesting fact available")
             animalData.append({"name": name, "image": image, "interestingFact": interestingFact})
-
-    # The calendar logic here
     currentYear = datetime.now().year
     currentMonth = datetime.now().month
     currentDay = datetime.now().day
     cal = CustomHTMLCalendar(currentYear, currentMonth, currentDay)
     calendarHtml = cal.formatmonth(currentYear, currentMonth)
     currentDate = datetime.now().strftime("%B, %d %Y")
-
     return render_template('home.html', calendarHtml=calendarHtml, currentDate=currentDate, searchTerm=searchTerm, results=animalData)
 
 
