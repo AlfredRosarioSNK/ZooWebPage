@@ -919,8 +919,6 @@ html {
 @media (max-width:390px) {
   .nav-item--style {
     transform: translate(87%, -20%);
-    width: 275px;
-    height: 300px;
   }
 
   .login-icon {
@@ -964,7 +962,7 @@ html {
     height: auto;
     margin-bottom: 5%;
     margin-left: 0;
-    transform: translate(-20px, -88px);
+    transform: translate(26px, -18px);
   }
 }
 
@@ -986,10 +984,10 @@ html {
   .animalIcons--container {
     flex-direction: column;
   }
-
   .icon-wrapper {
     margin-bottom: 5%;
-  }
+    margin-top: 7%;
+}
 }
 
 .animal-icon--dimensions {
@@ -1042,7 +1040,7 @@ html {
 
 .card img {
   width: 100%;
-  height: 700px;
+  height: auto;
   object-fit: cover;
 }
 
@@ -1808,9 +1806,11 @@ video {
   }
 
   .login-form {
-    transform: translate(-78%, -192%);
+    transform: translate(45px, -16px);
+    width: 210px;
+    height: 186px;
     z-index: 99;
-  }
+}
 }
 
 @media (min-width:2000px) {
